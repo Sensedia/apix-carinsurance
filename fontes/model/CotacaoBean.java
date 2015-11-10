@@ -19,7 +19,6 @@ public class CotacaoBean {
 	private Long id;
 	
 	private String nome;
-	private String descricao;
 	private Double valorApolice;
 	private Double valorFranquia;
 	
@@ -37,14 +36,6 @@ public class CotacaoBean {
 	
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-	
-	public String getDescricao() {
-		return descricao;
-	}
-	
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
 	}
 	
 	public Double getValorApolice() {

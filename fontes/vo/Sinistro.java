@@ -8,14 +8,10 @@ package com.sensedia.apix.server.vo;
  *
  */
 public class Sinistro {
-
-	public enum Tipo {
-	    FURTO, ROUBO, ACIDENTE
-	}
 	
 	private Long id;
 	
-	private Tipo tipo;
+	private String tipo;
 	private String localizacao;
 	
 	public Long getId() {
@@ -26,11 +22,11 @@ public class Sinistro {
 		this.id = id;
 	}
 	
-	public Tipo getTipo() {
+	public String getTipo() {
 		return tipo;
 	}
 	
-	public void setTipo(Tipo tipo) {
+	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 	

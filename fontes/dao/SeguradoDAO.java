@@ -46,8 +46,11 @@ public class SeguradoDAO {
 				query.setHint(JPACursorHelper.CURSOR_HINT, cursor);
 			}
 
+			if (offset != null) {
+				query.setFirstResult(offset);				
+			}
+			
 			if (limit != null) {
-				query.setFirstResult(offset);
 				query.setMaxResults(limit);
 			}
 

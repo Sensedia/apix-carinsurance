@@ -9,9 +9,11 @@ import javax.inject.Named;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.sensedia.apix.server.model.CotacaoBean;
+import com.sensedia.apix.server.model.SeguradoBean;
 import com.sensedia.apix.server.service.CotacaoService;
 import com.sensedia.apix.server.util.ConverterUtil;
 import com.sensedia.apix.server.vo.Cotacao;
+import com.sensedia.apix.server.vo.Segurado;
 
 /**
  * WS Rest para manutenção de cotações.
@@ -19,12 +21,12 @@ import com.sensedia.apix.server.vo.Cotacao;
  * @author Luiz César Cherri
  *
  */
-@Api(name = "cotacaoendpoint")
+@Api(name = "carinsuranceendpoint", version = "v1")
 public class CotacaoEndpoint {
 
 	CotacaoService cotacaoService = new CotacaoService();
 
-	@ApiMethod(name = "listCotacao", httpMethod = "GET")
+	@ApiMethod(name = "listCotacao", httpMethod = "GET", path = "cotacoes")
 	public List<Cotacao> listCotacao(
 			@Nullable @Named("_offset") Integer offset,
 			@Nullable @Named("_limit") Integer limit,
@@ -44,34 +46,37 @@ public class CotacaoEndpoint {
 
 	}
 
-	@ApiMethod(name = "getCotacao", httpMethod = "GET")
+	@ApiMethod(name = "getCotacao", httpMethod = "GET", path = "cotacoes/{id}")
 	public Cotacao getCotacao(@Named("id") Long id) {
 		return ConverterUtil.getInstance().toCotacaoVO(
 				cotacaoService.getCotacao(id));
 	}
 
-	@ApiMethod(name = "insertCotacao", httpMethod = "POST")
-	public Cotacao insertCotacao(Cotacao cotacao) {
+	@ApiMethod(name = "requestCotacao", httpMethod = "POST", path = "cotacoes")
+	public Cotacao requestCotacao(Segurado segurado) {
 
-		CotacaoBean cotacaoBean = ConverterUtil.getInstance().toCotacaoBean(
-				cotacao);
+		SeguradoBean seguradoBean = ConverterUtil.getInstance().toSeguradoBean(
+				segurado);
 
 		return ConverterUtil.getInstance().toCotacaoVO(
-				cotacaoService.insertCotacao(cotacaoBean));
+				cotacaoService.requestCotacao(seguradoBean));
 
 	}
 
-	@ApiMethod(name = "updateCotacao", httpMethod = "PUT")
-	public Cotacao updateCotacao(Cotacao cotacao) {
+	@ApiMethod(name = "updateCotacao", httpMethod = "PUT", path = "cotacoes/{id}")
+	public Cotacao updateCotacao(@Named("id") Long id, Segurado segurado) {
 
-		CotacaoBean cotacaoBean = ConverterUtil.getInstance().toCotacaoBean(
-				cotacao);
+		segurado.setId(id);
+		
+		SeguradoBean seguradoBean = ConverterUtil.getInstance().toSeguradoBean(
+				segurado);
 
 		return ConverterUtil.getInstance().toCotacaoVO(
-				cotacaoService.insertCotacao(cotacaoBean));
+				cotacaoService.updateCotacao(seguradoBean));
+		
 	}
 
-	@ApiMethod(name = "removeCotacao", httpMethod = "DELETE")
+	@ApiMethod(name = "removeCotacao", httpMethod = "DELETE", path = "cotacoes/{id}")
 	public void removeCotacao(@Named("id") Long id) {
 
 		cotacaoService.removeCotacao(id);

@@ -13,16 +13,12 @@ import javax.persistence.Id;
  */
 @Entity
 public class SinistroBean {
-
-	public enum Tipo {
-	    FURTO, ROUBO, ACIDENTE
-	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private Tipo tipo;
+	private String tipo;
 	private String localizacao;
 	
 	public Long getId() {
@@ -33,11 +29,11 @@ public class SinistroBean {
 		this.id = id;
 	}
 	
-	public Tipo getTipo() {
+	public String getTipo() {
 		return tipo;
 	}
 	
-	public void setTipo(Tipo tipo) {
+	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 	

@@ -61,16 +61,7 @@ public class CotacaoDAO {
 			if (valorMaximo != null) {
 				Predicate vlMaxPredicate = cb.lessThanOrEqualTo(path, valorMaximo);
 				criteria.where(vlMaxPredicate);
-			}
-			
-			
-//			String jpql = "select from CotacaoBean as Cotacao where '1' = '1'";
-//			if (valorMinimo != null) {
-//				jpql += " and Cotacao.valorApolice >= " + valorMinimo.toString();
-//			}
-//			if (valorMaximo != null) {
-//				jpql += " and Cotacao.valorApolice <= " + valorMaximo.toString();
-//			}			
+			}		
 			
 			Query query = mgr.createQuery(criteria);
 			if (cursorString != null && cursorString != "") {
@@ -78,8 +69,11 @@ public class CotacaoDAO {
 				query.setHint(JPACursorHelper.CURSOR_HINT, cursor);
 			}
 
+			if (offset != null) {
+				query.setFirstResult(offset);				
+			}
+			
 			if (limit != null) {
-				query.setFirstResult(offset);
 				query.setMaxResults(limit);
 			}
 

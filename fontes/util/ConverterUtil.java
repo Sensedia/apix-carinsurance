@@ -133,7 +133,7 @@ public class ConverterUtil {
 		
 		vo.setId(bean.getId());
 		vo.setLocalizacao(bean.getLocalizacao());
-		vo.setTipo(Sinistro.Tipo.valueOf(bean.getTipo().toString()));
+		vo.setTipo(bean.getTipo());
 
 		return vo;
 		
@@ -239,7 +239,7 @@ public class ConverterUtil {
 
 		bean.setId(vo.getId());
 		bean.setLocalizacao(vo.getLocalizacao());
-		bean.setTipo(SinistroBean.Tipo.valueOf(vo.getTipo().toString()));
+		bean.setTipo(vo.getTipo());
 		
 		return bean;
 
