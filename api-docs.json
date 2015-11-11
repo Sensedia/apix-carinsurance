@@ -1,0 +1,460 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Exemplo de especificação para as APIs do sistema CarIn usado no workshop do API Experience da Sensedia. (http://www.apiexperience.com.br/)",
+        "version": "0.0.1",
+        "title": "CarIn - Car Insurance",
+        "contact": {
+            "name": "suporte@sensedia.com"
+        }
+    },
+    "host": "portal.apix.sensedia.com",
+    "basePath": "/proxy/sandbox/carin/v1/",
+    "paths": {
+        "/cotacoes": {
+            "get": {
+                "tags": [
+                    "Cotacoes"
+                ],
+                "description": "Obtém a lista de todas as `Cotacoes` já realizadas.\nFiltros de escopo podem ser usados para range de valor e quantidade de cotações retornadas.\nAlém disso, é possível definir a paginação dos resultados com os parâmetros _offset e _limit.\nSe você quiser apenas alguns dos atributos de produtos, use o parâmetro _fields.\n",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "Identificador da app",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "_limit",
+                        "in": "query",
+                        "description": "Quantidade de cotações retornadas",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "_offset",
+                        "in": "query",
+                        "description": "Por onde começar",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "valorMinimo",
+                        "in": "query",
+                        "description": "Valor mínimo da cotação",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "valorMaximo",
+                        "in": "query",
+                        "description": "Valor máximo da cotação",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Cotacao"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Cotacoes"
+                ],
+                "description": "Cria uma nova cotação",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "Identificador da app",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "segurado",
+                        "in": "body",
+                        "description": "Dados do candidato a segurado, incluindo `Carro` e `Perfil`",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Segurado"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Criado com sucesso"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                }
+            }
+        },
+        "/cotacoes/{id}": {
+            "get": {
+                "tags": [
+                    "Cotacoes"
+                ],
+                "description": "Obtém os detalhes de uma `cotacao` específica.\n",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "Identificador da app",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador da cotação",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "schema": {
+                            "title": "produto",
+                            "$ref": "#/definitions/Cotacao"
+                        }
+                    },
+                    "400": {
+                        "description": "Id inválido"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Cotacoes"
+                ],
+                "description": "Altera os dados de uma cotação específica.\n",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "Identificador da app",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador da cotação",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "segurado",
+                        "in": "body",
+                        "description": "Dados do candidato a segurado, incluindo `Carro` e `Perfil`",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Segurado"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "schema": {
+                            "title": "cotacao",
+                            "$ref": "#/definitions/Cotacao"
+                        }
+                    },
+                    "400": {
+                        "description": "Id inválido"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Cotacoes"
+                ],
+                "description": "Exclui uma cotação específica.\n",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "Identificador da app",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador da cotação",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso"
+                    },
+                    "400": {
+                        "description": "Id inválido"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                }
+            }
+        },
+        "/sinistros": {
+            "get": {
+                "tags": [
+                    "Sinistros"
+                ],
+                "description": "Obtém a lista de todas os `Sinistros` registrados.\nÉ possível definir a paginação dos resultados com os parâmetros _offset e _limit.\n",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "Identificador da app",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "_limit",
+                        "in": "query",
+                        "description": "Quantidade de cotações retornadas",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "_offset",
+                        "in": "query",
+                        "description": "Por onde começar",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Sinistro"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Sinistros"
+                ],
+                "description": "Registra um novo sinistro",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "Identificador da app",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sinistro",
+                        "in": "body",
+                        "description": "Dados do sinistro, incluindo tipo e localização",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Sinistro"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Criado com sucesso"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                }
+            }
+        },
+        "/sinistros/{id}": {
+            "get": {
+                "tags": [
+                    "Sinistros"
+                ],
+                "description": "Obtém os detalhes de um sinistro específico.\n",
+                "parameters": [
+                    {
+                        "name": "app-token",
+                        "in": "header",
+                        "description": "Identificador da app",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador da cotação",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "schema": {
+                            "title": "produto",
+                            "$ref": "#/definitions/Cotacao"
+                        }
+                    },
+                    "400": {
+                        "description": "Id inválido"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Cotacao": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "nome": {
+                    "type": "string"
+                },
+                "valorApolice": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "valorFranquia": {
+                    "type": "number",
+                    "format": "double"
+                }
+            }
+        },
+        "Segurado": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "nome": {
+                    "type": "string"
+                },
+                "carro": {
+                    "$ref": "#/definitions/Carro"
+                },
+                "perfil": {
+                    "$ref": "#/definitions/Perfil"
+                }
+            }
+        },
+        "Carro": {
+            "required": [
+                "id",
+                "modelo"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "modelo": {
+                    "type": "string"
+                },
+                "versao": {
+                    "type": "string"
+                },
+                "ano": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "marca": {
+                    "type": "string"
+                }
+            }
+        },
+        "Perfil": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "lugarUso": {
+                    "type": "string"
+                },
+                "estadoCivil": {
+                    "type": "string"
+                },
+                "estacionamento": {
+                    "example": "privativo | fechado | aberto",
+                    "type": "string"
+                },
+                "sexo": {
+                    "type": "string"
+                },
+                "idade": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
+        "Sinistro": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "tipo": {
+                    "type": "string",
+                    "example": "furto, roubo, colisão..."
+                },
+                "localizacao": {
+                    "type": "string",
+                    "example": "35.850862 -78.886049"
+                }
+            }
+        }
+    }
+}
