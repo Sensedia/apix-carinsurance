@@ -9,14 +9,16 @@ info:
   title: CarIn - Car Insurance
   contact: 
     name: suporte@sensedia.com
-host: apix.sensedia.com
-basePath: /carin/v1
+host: portal.apix.sensedia.com
+basePath: /proxy/sandbox/carin/v1/
 
 paths:
   # Lista dos recursos.
   /cotacoes:
     # Operações HTTP associadas a esse recurso
     get:
+      tags:
+        - Cotacoes
       # Descrição do verbo
       description: |
         Obtém a lista de todas as `Cotacoes` já realizadas.
@@ -30,12 +32,6 @@ paths:
           name: app-token
           in: header
           description: Identificador da app
-          required: true
-          type: string
-        -
-          name: access-token
-          in: header
-          description: Identificador do usuário
           required: true
           type: string
         -
@@ -80,8 +76,16 @@ paths:
         "401":
           description: Não autorizado
     post:
+      tags:
+        - Cotacoes
       description: Cria uma nova cotação
       parameters:
+        -
+          name: app-token
+          in: header
+          description: Identificador da app
+          required: true
+          type: string
         -
           name: segurado
           in: body
@@ -97,6 +101,8 @@ paths:
     
   /cotacoes/{id}:
     get:
+      tags:
+        - Cotacoes
       description: |
         Obtém os detalhes de uma `cotacao` específica.
       # Lista de parâmetros:
@@ -106,12 +112,6 @@ paths:
           name: app-token
           in: header
           description: Identificador da app
-          required: true
-          type: string
-        -
-          name: access-token
-          in: header
-          description: Identificador do usuário
           required: true
           type: string
         -
@@ -136,6 +136,8 @@ paths:
         "401":
           description: Não autorizado  
     put:
+      tags:
+        - Cotacoes
       description: |
         Altera os dados de uma cotação específica.
       # Lista de parâmetros:
@@ -145,12 +147,6 @@ paths:
           name: app-token
           in: header
           description: Identificador da app
-          required: true
-          type: string
-        -
-          name: access-token
-          in: header
-          description: Identificador do usuário
           required: true
           type: string
         -
@@ -182,6 +178,8 @@ paths:
         "401":
           description: Não autorizado  
     delete:
+      tags:
+        - Cotacoes
       description: |
         Exclui uma cotação específica.
       # Lista de parâmetros:
@@ -191,12 +189,6 @@ paths:
           name: app-token
           in: header
           description: Identificador da app
-          required: true
-          type: string
-        -
-          name: access-token
-          in: header
-          description: Identificador do usuário
           required: true
           type: string
         -
@@ -225,8 +217,6 @@ definitions:
         type: integer
         format: int64
       nome:
-        type: string
-      descricao:
         type: string
       valorApolice:
         type: number
